@@ -2,22 +2,23 @@
 name = "saveroute"
 version = "0.1.0"
 description = "Compliance & sanctions risk API"
-authors = [
-    {name = "Bernikov Artyom bernikovartemal@gmail.com"}
-]
-license = {text = "MIT"}
+authors = [{ name = "Bernikov Artyom", email = "bernikovartemal@gmail.com" }]
+license = { text = "MIT" }
 readme = "README.md"
-requires-python = "^3.12"
+
+requires-python = ">=3.12,<4"
+
 dependencies = [
-    "pandas (>=2.3.1,<3.0.0)",
-    "scikit-learn (>=1.7.0,<2.0.0)",
-    "requests (>=2.32.4,<3.0.0)",
-    "python-dotenv (>=1.1.1,<2.0.0)",
-    "tqdm (>=4.67.1,<5.0.0)",
-    "fastapi (>=0.116.1,<0.117.0)",
-    "uvicorn (>=0.35.0,<0.36.0)",
-    "pydantic (>=2.11.7,<3.0.0)"
+    "pandas>=2.3.1,<3.0.0",
+    "scikit-learn>=1.7.0,<2.0.0",
+    "requests>=2.32.4,<3.0.0",
+    "python-dotenv>=1.1.1,<2.0.0",
+    "tqdm>=4.67.1,<5.0.0",
+    "fastapi>=0.116.1,<0.117.0",
+    "uvicorn>=0.35.0,<0.36.0",
+    "pydantic>=2.11.7,<3.0.0"
 ]
+
 
 
 [build-system]
