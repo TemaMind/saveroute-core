@@ -205,3 +205,11 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# data artefacts
+/data/*
+!/data/.gitkeep
+.env
+
+# .env.example
+UN_COMTRADE_API_KEY=changeme
