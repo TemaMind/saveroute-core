@@ -10,37 +10,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # ───── 1. Код ─────────────────────────────────────────────────────────
+      # 1. код
       - uses: actions/checkout@v4
 
-      # ───── 2. Python + Poetry  ───────────────────────────────────────────
+      # 2. Python + Poetry
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - uses: abatilo/actions-poetry@v3
 
-      # ───── 3. Устанавливаем зависимости  ────────────────────────────────
+      # 3. зависимости
       - name: Install deps
         run: poetry install --with dev
 
-      # ───── 4. Быстрый датасет (заглушки)  ────────────────────────────────
+      # 4. tiny-dataset (корректные имена файлов)
       - name: Build tiny dataset
         run: |
-        set -e
-        mkdir -p data/raw
-        # ➜ кладём заглушки с теми же именами, которые ждёт скрипт
-        touch data/raw/ofac_sdn_0000.csv
-        touch data/raw/eu_fsf.xml
-        touch data/raw/un_sc.xml
+          set -e
+          mkdir -p data/raw
+          # заглушки c ожидаемыми именами
+          echo "name,program,nationality,publication_date" > data/raw/ofac_sdn_0000.csv
+          echo "<root></root>"                         > data/raw/eu_fsf.xml
+          echo "<root></root>"                         > data/raw/un_sc.xml
 
-        poetry run python scripts/10_normalize_sanctions.py
-        poetry run python scripts/20_build_dataset.py
+          poetry run python scripts/10_normalize_sanctions.py
+          poetry run python scripts/20_build_dataset.py
+          ls -lh data/processed/train.parquet
 
-      # ───── 5. Lint  ──────────────────────────────────────────────────────
+      # 5. lint
       - name: Ruff lint
         run: poetry run ruff check .
 
-      # ───── 6. Тесты  ─────────────────────────────────────────────────────
+      # 6. тесты
       - name: Pytest
         run: poetry run pytest -q
