@@ -29,10 +29,14 @@ jobs:
         run: |
           set -e
           mkdir -p data/raw
-          # заглушки c ожидаемыми именами
+          # ── санкционные заглушки ────────────────────────────────
           echo "name,program,nationality,publication_date" > data/raw/ofac_sdn_0000.csv
-          echo "<root></root>"                         > data/raw/eu_fsf.xml
-          echo "<root></root>"                         > data/raw/un_sc.xml
+          echo "<root></root>" > data/raw/eu_fsf.xml
+          echo "<root></root>" > data/raw/un_sc.xml
+
+          # ── HS-коды: заголовок Code / Description ───────────────
+          echo "Code,Description" > data/raw/hs_full.csv
+
 
           poetry run python scripts/10_normalize_sanctions.py
           poetry run python scripts/20_build_dataset.py
