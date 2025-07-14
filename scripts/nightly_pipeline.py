@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-import pathlib, datetime, subprocess, sys, json, shutil, hashlib, re
+import datetime
+import subprocess
+import sys
+import hashlib
 import pandas as pd
-
-from _utils import download 
-import scripts.sanctions_parser as sp 
-from scripts.config import RAW, INTR, PROC, OFAC_URL, EU_URL, UN_URL
-from scripts.build_dataset import build_dataset 
+from _utils import download
+import scripts.sanctions_parser as sp
+from scripts.config import INTR, OFAC_URL, EU_URL, UN_URL
+from scripts.build_dataset import build_dataset
 
 THRESHOLD = 0.01        # retrain, если прирост ≥ 1 %
 TODAY = datetime.date.today().strftime("%Y%m%d")
@@ -69,7 +71,6 @@ if growth < THRESHOLD:
     sys.exit(0)
 
 # ---------------------------------------------------------------- dataset &
-from scripts.build_dataset import build_dataset
 build_dataset(master_df=updated_master)
 print("✓ train.parquet rebuilt")
 

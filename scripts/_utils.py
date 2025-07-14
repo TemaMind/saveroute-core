@@ -1,5 +1,7 @@
-import requests, time, hashlib
-from 00_config import RAW
+import requests
+import time
+import hashlib
+from scripts.config import RAW
 def download(url: str, fname: str | None = None) -> str:
     t0 = time.time()
     resp = requests.get(url, timeout=60)

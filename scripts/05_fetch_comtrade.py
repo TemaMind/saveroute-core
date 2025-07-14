@@ -1,5 +1,5 @@
-from comtradeapicall import ComtradeAPI     # :contentReference[oaicite:5]{index=5}
-import pandas as pd, pathlib
+from comtradeapicall import ComtradeAPI
+import pathlib
 
 api = ComtradeAPI()
 df = api.previewFinalData({

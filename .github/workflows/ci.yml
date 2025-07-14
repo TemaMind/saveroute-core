@@ -8,15 +8,37 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
+      # ───── 1. Код ─────────────────────────────────────────────────────────
       - uses: actions/checkout@v4
+
+      # ───── 2. Python + Poetry  ───────────────────────────────────────────
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
       - uses: abatilo/actions-poetry@v3
+
+      # ───── 3. Устанавливаем зависимости  ────────────────────────────────
       - name: Install deps
         run: poetry install --with dev
+
+      # ───── 4. Быстрый датасет (заглушки)  ────────────────────────────────
+      - name: Build tiny dataset
+        run: |
+          set -e
+          mkdir -p data/raw
+          # пустые файлы-заглушки (скрипты отработают, не упадут)
+          touch data/raw/ofac_sdn.csv data/raw/eu_fsf.xml data/raw/un_sc.xml
+          poetry run python scripts/10_normalize_sanctions.py
+          poetry run python scripts/20_build_dataset.py
+          ls -lh data/processed/train.parquet
+
+      # ───── 5. Lint  ──────────────────────────────────────────────────────
       - name: Ruff lint
         run: poetry run ruff check .
+
+      # ───── 6. Тесты  ─────────────────────────────────────────────────────
       - name: Pytest
         run: poetry run pytest -q

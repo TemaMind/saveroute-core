@@ -213,4 +213,4 @@ __marimo__/
 
 
 # .env.example
-UN_COMTRADE_API_KEY=changeme
+UN_COMTRADE_API_KEY=changemenotebooks/*.ipynb
