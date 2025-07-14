@@ -27,13 +27,15 @@ jobs:
       # ───── 4. Быстрый датасет (заглушки)  ────────────────────────────────
       - name: Build tiny dataset
         run: |
-          set -e
-          mkdir -p data/raw
-          # пустые файлы-заглушки (скрипты отработают, не упадут)
-          touch data/raw/ofac_sdn.csv data/raw/eu_fsf.xml data/raw/un_sc.xml
-          poetry run python scripts/10_normalize_sanctions.py
-          poetry run python scripts/20_build_dataset.py
-          ls -lh data/processed/train.parquet
+        set -e
+        mkdir -p data/raw
+        # ➜ кладём заглушки с теми же именами, которые ждёт скрипт
+        touch data/raw/ofac_sdn_0000.csv
+        touch data/raw/eu_fsf.xml
+        touch data/raw/un_sc.xml
+
+        poetry run python scripts/10_normalize_sanctions.py
+        poetry run python scripts/20_build_dataset.py
 
       # ───── 5. Lint  ──────────────────────────────────────────────────────
       - name: Ruff lint
