@@ -1,16 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-import joblib, pathlib
+import joblib
+import pathlib
 
 MODEL = joblib.load(pathlib.Path("models/saveroute_lr.joblib"))
 app = FastAPI(title="SafeRoute API", version="0.1.0")
 
+
 class Item(BaseModel):
     description: str
+
 
 class Prediction(BaseModel):
     risk_score: float
     risk_label: int
+
 
 @app.post("/v1/check", response_model=Prediction)
 def check(item: Item):

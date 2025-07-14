@@ -1,4 +1,10 @@
-import pytest, asyncio, uvicorn, multiprocessing, time, httpx, os
+import multiprocessing
+import time
+
+import httpx
+import pytest
+import uvicorn
+
 
 @pytest.fixture(scope="session", autouse=True)
 def api_server():
@@ -12,6 +18,7 @@ def api_server():
     time.sleep(1)  # give server time
     yield
     proc.terminate()
+
 
 @pytest.mark.asyncio
 async def test_check_endpoint():
